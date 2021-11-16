@@ -18,7 +18,8 @@ phases:
         tinit=$(terraform init)
         tplan=$(terraform plan)
         output="#### Terraform Initialization 🖌 $enter$tinit"
+        echo $output
         curl -X PATCH -H "Accept:application/vnd.github.v3+json" -H "Authorization:Bearer $GITHUB_TOKEN" \
           "https://api.github.com/repos/srinin01/test30/pulls/2" -d '{ "title": "srini403" }'
-        echo $output
+        
       - echo build done!
