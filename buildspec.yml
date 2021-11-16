@@ -1,7 +1,7 @@
 
 env:
   secrets-manager:
-    GITHUB_TOKEN: "arn:aws:secretsmanager:us-east-1:839734283765:secret:Srini-POC-Github-t0UOOD"
+    GITHUB_TOKEN: "arn:aws:secretsmanager:us-east-1:839734283765:secret:Srini-POC-Github-t0UOOD:srini_poc_github"
 phases:
   install:
     commands:
