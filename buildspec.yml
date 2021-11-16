@@ -1,0 +1,23 @@
+
+env:
+  secrets-manager:
+    GITHUB_TOKEN: "arn:aws:secretsmanager:us-east-1:839734283765:secret:Srini-POC-Github-t0UOOD"
+phases:
+  install:
+    commands:
+    - curl -s -qL -o terraform_install.zip https://releases.hashicorp.com/terraform/1.0.11/terraform_1.0.11_linux_amd64.zip
+    - unzip terraform_install.zip -d /usr/bin/
+    - chmod +x /usr/bin/terraform
+    finally:
+      - terraform --version
+  build:
+    commands:
+      - |
+        enter="\n"
+        tinit=$(terraform init)
+        tplan=$(terraform plan)
+        output="#### Terraform Initialization 🖌 $enter$tinit"
+        curl -X PATCH -H "Accept:application/vnd.github.v3+json" -H "Authorization:Bearer $GITHUB_TOKEN" \
+          "https://api.github.com/repos/srinin01/test30/pulls/2" -d '{ "title": "srini403" }'
+        echo $output
+      - echo build done!!
