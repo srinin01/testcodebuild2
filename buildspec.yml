@@ -32,4 +32,4 @@ phases:
           curl -X PATCH -H "Accept:application/vnd.github.v3+json" -H "Authorization:Bearer $GITHUB_TOKEN" \
             "https://api.github.com/repos/srinin01/testcodebuild2/pulls/$pr_num" -d '{ "title": "$tplan" }'
         
-      - echo build done!
+      - echo build done!!
