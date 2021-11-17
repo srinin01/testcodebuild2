@@ -23,12 +23,13 @@ phases:
         if [[ $trigger == pr* ]]; then
           pr_num=${trigger#*/}
         fi  
-          
+        pr_num=2  
         echo $pr_num
         output="#### Terraform Initialization 🖌 $enter$tinit"
+        output="$output #### Terraform Plan 🖌 $enter$tplan"
         echo $output
         if [[ -n "$pr_num" ]]; then
           curl -X PATCH -H "Accept:application/vnd.github.v3+json" -H "Authorization:Bearer $GITHUB_TOKEN" \
-            "https://api.github.com/repos/srinin01/testcodebuild2/pulls/$pr_num" -d '{ "title": "hello" }'
+            "https://api.github.com/repos/srinin01/testcodebuild2/pulls/$pr_num" -d '{ "title": $output }'
         
       - echo build done!
