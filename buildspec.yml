@@ -17,9 +17,13 @@ phases:
         enter="\n"
         tinit=$(terraform init)
         tplan=$(terraform plan)
+        trigger=${CODEBUILD_WEBHOOK_TRIGGER}
+        if [ "$CODEBUILD_WEBHOOK_EVENT" = 'PULL_REQUEST_CREATED' ]; then
+          echo ${CODEBUILD_WEBHOOK_EVENT}
+        fi
         output="#### Terraform Initialization 🖌 $enter$tinit"
         echo $output
         curl -X PATCH -H "Accept:application/vnd.github.v3+json" -H "Authorization:Bearer $GITHUB_TOKEN" \
-          "https://api.github.com/repos/srinin01/test30/pulls/2" -d '{ "title": $tplan }'
+          "https://api.github.com/repos/srinin01/test30/pulls/2" -d '{ "title": "hello" }'
         
       - echo build done!
