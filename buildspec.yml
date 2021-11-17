@@ -18,6 +18,8 @@ phases:
         tinit=$(terraform init)
         tplan=$(terraform plan)
         trigger=${CODEBUILD_WEBHOOK_TRIGGER}
+        echo $trigger
+        echo ${CODEBUILD_WEBHOOK_EVENT}
         if [ "$CODEBUILD_WEBHOOK_EVENT" = 'PULL_REQUEST_CREATED' ]; then
           echo ${CODEBUILD_WEBHOOK_EVENT}
         fi
