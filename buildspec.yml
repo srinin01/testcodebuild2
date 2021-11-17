@@ -20,15 +20,15 @@ phases:
         trigger=${CODEBUILD_WEBHOOK_TRIGGER}
         echo $trigger
         echo ${CODEBUILD_WEBHOOK_EVENT}
-        if [ ${CODEBUILD_WEBHOOK_EVENT} == 'PUSH' ]; then
-          PR=${CODEBUILD_WEBHOOK_EVENT}
-          pr_num=${PR#*/}
-          echo $pr_num
-        fi
+        if [[ $trigger == pr* ]]; then
+          pr_num=${trigger#*/}
+        fi  
+          
         echo $pr_num
         output="#### Terraform Initialization 🖌 $enter$tinit"
         echo $output
-        curl -X PATCH -H "Accept:application/vnd.github.v3+json" -H "Authorization:Bearer $GITHUB_TOKEN" \
-          "https://api.github.com/repos/srinin01/testcodebuild2/pulls/$pr_num" -d '{ "title": "hello" }'
+        if [[ -n "$pr_num" ]]; then
+          curl -X PATCH -H "Accept:application/vnd.github.v3+json" -H "Authorization:Bearer $GITHUB_TOKEN" \
+            "https://api.github.com/repos/srinin01/testcodebuild2/pulls/$pr_num" -d '{ "title": "hello" }'
         
       - echo build done!
