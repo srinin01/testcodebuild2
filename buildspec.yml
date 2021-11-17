@@ -14,7 +14,7 @@ phases:
   build:
     commands:
       - |
-        enter="\n"
+        enter=$'\n'
         tinit=$(terraform init)
         tplan=$(terraform plan)
         trigger=${CODEBUILD_WEBHOOK_TRIGGER}
@@ -25,11 +25,21 @@ phases:
         fi  
         pr_num=2  
         echo $pr_num
-        output="#### Terraform Initialization 🖌 $enter$tinit"
-        output="$output #### Terraform Plan 🖌 $enter$tplan"
-        echo $output
+        init_str="#### Terraform Initialization 🖌"
+        plan_str="#### Terraform Plan 🖌"
+        output_str=$(cat << EOF
+        $init_str
+        
+        $tinit
+        
+        $plan_str
+        
+        $tplan
+        EOF
+        )
+        echo $output_str
         if [[ -n "$pr_num" ]]; then
           curl -X PATCH -H "Accept:application/vnd.github.v3+json" -H "Authorization:Bearer $GITHUB_TOKEN" \
-            "https://api.github.com/repos/srinin01/testcodebuild2/pulls/$pr_num" -d '{ "title": $output }'
+            "https://api.github.com/repos/srinin01/testcodebuild2/pulls/$pr_num" -d '{ "title": output_str }'
         
       - echo build done!
