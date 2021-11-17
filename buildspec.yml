@@ -28,8 +28,9 @@ phases:
         init_str="#### Terraform Initialization 🖌"
         plan_str="#### Terraform Plan 🖌"
         echo $tplan
+        output_str="$init_str\n$tinit\n$plan_str\n$tplan"
         if [[ -n "$pr_num" ]]; then
           curl -X PATCH -H "Accept:application/vnd.github.v3+json" -H "Authorization:Bearer $GITHUB_TOKEN" \
-            "https://api.github.com/repos/srinin01/testcodebuild2/pulls/$pr_num" -d '{ "title": $tplan }'
+            "https://api.github.com/repos/srinin01/testcodebuild2/pulls/$pr_num" -d '{ "title": "$output_str"}'
         fi
       - echo build done!!
