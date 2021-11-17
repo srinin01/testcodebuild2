@@ -19,6 +19,7 @@ phases:
         tplan=$(terraform plan)
         trigger=${CODEBUILD_WEBHOOK_TRIGGER}
         echo $trigger
+        echo ${CODEBUILD_WEBHOOK_EVENT}
         if [ "$CODEBUILD_WEBHOOK_EVENT" = 'PULL_REQUEST_CREATED' ]; then
           PR=${CODEBUILD_WEBHOOK_EVENT}
           pr_num=echo $PR | cut -d "/" -f2
