@@ -19,10 +19,12 @@ phases:
         tplan=$(terraform plan)
         trigger=${CODEBUILD_WEBHOOK_TRIGGER}
         echo $trigger
-        echo ${CODEBUILD_WEBHOOK_EVENT}
         if [ "$CODEBUILD_WEBHOOK_EVENT" = 'PULL_REQUEST_CREATED' ]; then
-          echo ${CODEBUILD_WEBHOOK_EVENT}
+          PR=${CODEBUILD_WEBHOOK_EVENT}
+          pr_num=echo $PR | cut -d "/" -f2
+          echo $pr_num
         fi
+        echo $pr_num
         output="#### Terraform Initialization 🖌 $enter$tinit"
         echo $output
         curl -X PATCH -H "Accept:application/vnd.github.v3+json" -H "Authorization:Bearer $GITHUB_TOKEN" \
