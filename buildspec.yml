@@ -27,6 +27,18 @@ phases:
         echo $pr_num
         init_str="#### Terraform Initialization 🖌"
         plan_str="#### Terraform Plan 🖌"
+        output_str=$(cat << EOF
+        $init_str
+
+        $tinit
+
+        $plan_str
+
+        $tplan
+
+        EOF
+        )
+        echo "$output_str"
         echo $tplan
         output_str="$init_str\n$tinit\n$plan_str\n$tplan"
         if [[ -n "$pr_num" ]]; then
