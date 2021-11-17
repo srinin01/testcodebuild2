@@ -20,7 +20,7 @@ phases:
         trigger=${CODEBUILD_WEBHOOK_TRIGGER}
         echo $trigger
         echo ${CODEBUILD_WEBHOOK_EVENT}
-        if [ "$CODEBUILD_WEBHOOK_EVENT" = 'PUSH' ]; then
+        if [ "$CODEBUILD_WEBHOOK_EVENT" == 'PUSH' ]; then
           PR=${CODEBUILD_WEBHOOK_EVENT}
           pr_num=echo $PR | cut -d "/" -f2
           echo $pr_num
