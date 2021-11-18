@@ -15,6 +15,7 @@ phases:
     commands:
       - |
         enter=$'\n'
+        terraform init
         tplan=$(terraform plan)
         trigger=${CODEBUILD_WEBHOOK_TRIGGER}
         echo $trigger
